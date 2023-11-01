@@ -1,4 +1,6 @@
 import os
+import random
+
 
 #funcao para verificar as letras acentuadas
 #Letra digitada, palavra a ser descoberta
@@ -11,8 +13,8 @@ def LetrasAcento(ltr, word):
       "U": ["Ú"],
       "C": ["Ç"]
   }
-  lst = [ltr] #lista com as letras
-  if not(ltr in mapLetra):
+  lst = [ltr]  #lista com as letras
+  if not (ltr in mapLetra):
     return lst
   for i in mapLetra[ltr]:
     if i in word:
@@ -41,9 +43,9 @@ def printSecretWord(word, lst_desc, lst_er):
     if i in alfabeto:
       alfabeto = alfabeto.replace("," + i, "")
 
-  print("Letras que eu errei:",",".join(lst_er))
+  print("Letras que eu errei:", ",".join(lst_er))
   print("Letras disponiveis:", alfabeto[1:])
-  
+
   return newWord
 
 
@@ -90,3 +92,30 @@ def VerifyLetraInWord(ltr, word, descobertas, erros):
     else:
       erros.append(ltrI)
   return acerT
+
+
+def printdisplay(word, lst_desc, lst_er, pontos):
+  os.system('clear')
+  printForca(word, lst_desc, len(lst_er))
+  newW = printSecretWord(word, lst_desc, lst_er)
+  print(newW)
+  print("")
+
+  print("")
+  print("Meus pontos:", pontos, "\n")
+  return newW
+
+
+def dicas(pontos, word, lst_desc):
+
+  if pontos >= 5:
+    pontos -= 5
+    while True:
+      new = random.choice(list(word))
+      if not (new in lst_desc):
+        lst_desc.append(new)
+
+        return new, pontos
+  else:
+    return "False", pontos
+
